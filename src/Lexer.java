@@ -27,17 +27,16 @@ public class Lexer {
         }
     }
     public Token nextToken() {
-        String s = input.substring(location,1);
+        String s = input.substring(location,location+1);
         if( isInteger(s) )
         {
-
             StringBuilder sb = new StringBuilder();
-            for(int i=location; i < input.length() && isInteger(input.substring(i,1));i++)
+            for(; location < input.length() && isInteger(input.substring(location,location+1));location++)
             {
-               sb.append(input.substring(i,1));
-               location++;
-                System.out.println(sb.toString());
+               sb.append(input.substring(location,location+1));
             }
+
+            System.out.println(sb.toString());
         }
         return null;
     }
