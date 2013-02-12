@@ -30,6 +30,7 @@ public class Lexer {
         String s = input.substring(location,1);
         if( isInteger(s) )
         {
+
             StringBuilder sb = new StringBuilder();
             for(int i=location; i < input.length() && isInteger(input.substring(i,1));i++)
             {
