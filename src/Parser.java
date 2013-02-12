@@ -20,7 +20,6 @@ public class Parser {
     }
 
     public void expr() {
-        System.out.print(token.gettCode());
         while ( token.gettCode() == TokenCode.PLUS ) {
             token = lexer.nextToken();
             term();
@@ -36,7 +35,7 @@ public class Parser {
     }
 
     public void factor() {
-        /* Ákvarða hvora málregluna eigi að nota */
+        /* Decide what rule to use */
         if (token.gettCode() == TokenCode.INT)
             token = lexer.nextToken(); /* get the next token */
         else if (token.gettCode() == TokenCode.LPAREN)
@@ -45,15 +44,13 @@ public class Parser {
             expr();
             if (token.gettCode() == TokenCode.RPAREN)
                 token = lexer.nextToken();
-            else
-                throw new PatternSyntaxException("Syntax Error","Token not correct",token.hashCode());
         }
         else error(); /* neither and id nor a left parenthesis */
     }
 
     public void error() {
-        System.err.print("Cheerios error");
-        throw new StackOverflowError("Error fallid");
+        System.out.println("Syntax error!");
+        System.exit(1);
     }
 
     public void parse() {
