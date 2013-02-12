@@ -1,3 +1,6 @@
+/*
+   Write the class Token,  which contains both a lexeme and a token code
+ */
 enum TokenCode {
     INT,
     PLUS,
