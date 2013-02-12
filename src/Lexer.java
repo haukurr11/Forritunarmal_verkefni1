@@ -27,18 +27,30 @@ public class Lexer {
         }
     }
     public Token nextToken() {
+        if(location == input.length())
+           return new Token(TokenCode.END,"\n");
         String s = input.substring(location,location+1);
+        location++;
         if( isInteger(s) )
         {
             StringBuilder sb = new StringBuilder();
+            sb.append(s);
             for(; location < input.length() && isInteger(input.substring(location,location+1));location++)
             {
                sb.append(input.substring(location,location+1));
             }
-
-            System.out.println(sb.toString());
+            return new Token(TokenCode.INT,sb.toString());
         }
-        return null;
+        else if(s.equals("("))
+           return new Token(TokenCode.LPAREN,s);
+        else if(s.equals(")"))
+           return new Token(TokenCode.RPAREN,s);
+        else if(s.equals("+"))
+           return new Token(TokenCode.PLUS,s);
+        else if(s.equals("*"))
+           return new Token(TokenCode.MULT,s);
+        else
+            return new Token(TokenCode.ERROR,"");
     }
     private static boolean isInteger(String s) {
         try {
