@@ -11,7 +11,7 @@ message: “Error for operator:  nameOfOperator”
 (where nameOfOperator is the operator in question) and immediately quit.
  */
 public class Interpreter {
-    public void main(String args[])
+    public static void main(String args[])
     {
         Lexer myLexer = new Lexer();
         Parser myParser = new Parser(myLexer);
