@@ -1,4 +1,5 @@
-import java.util.regex.PatternSyntaxException;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 /*
 Implement the class Parser, the syntax analyzer (parser).
@@ -11,17 +12,23 @@ then the parser should output the error message "Syntax error!"
 (at the point when the error is recognized) and immediately quit.
 */
 public class Parser {
+    private Queue<Token> TheQ;
     private Lexer lexer;
     private Token token;
     public Parser(Lexer lexer )
     {
+        TheQ = new ArrayDeque<Token>();
         this.lexer=lexer;
-        token = lexer.nextToken();
+        token = this.lexer.nextToken();
+        TheQ.add(token);
     }
 
     public void expr() {
+
+        term();
         while ( token.gettCode() == TokenCode.PLUS ) {
             token = lexer.nextToken();
+            TheQ.add(token);
             term();
         }
     }
@@ -30,6 +37,7 @@ public class Parser {
         factor(); /* parses the first factor */
         while ( token.gettCode() == TokenCode.MULT) {
             token = lexer.nextToken();
+            TheQ.add(token);
             factor();
         }
     }
@@ -39,15 +47,20 @@ public class Parser {
         if (token.gettCode() == TokenCode.INT)
         {
             token = lexer.nextToken(); /* get the next token */
-
+            TheQ.add(token);
         }
         else if (token.gettCode() == TokenCode.LPAREN)
         {
             token = lexer.nextToken();
+            TheQ.add(token);
             expr();
-            if (token.gettCode() == TokenCode.RPAREN)
+            if (token.gettCode() == TokenCode.RPAREN) {
                 token = lexer.nextToken();
+                TheQ.add(token);
+            }
         }
+
+
         else error(); /* neither and id nor a left parenthesis */
     }
 
@@ -57,16 +70,22 @@ public class Parser {
     }
 
     public void end() {
+        System.out.println("End!");
 
     }
 
     public void print() {
-
+          Token it = TheQ.poll();
+          while (it != null)
+          {
+               System.out.println(it.gettCode());
+               it = TheQ.poll();
+          }
     }
 
     public void parse() {
         expr();
-        end();
+       // end();
         print();
     }
 }
