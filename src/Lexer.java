@@ -14,16 +14,39 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Lexer {
-    public Token nextToken() {
+    String input;
+    int location;
+    public Lexer() {
+        location = 0;
         try {
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
-            String s = br.readLine();
-
+            input = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    }
+    public Token nextToken() {
+        String s = input.substring(location,1);
+        if( isInteger(s) )
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int i=location; i < input.length() && isInteger(input.substring(i,1));i++)
+            {
+               sb.append(input.substring(i,1));
+               location++;
+                System.out.println(sb.toString());
+            }
+        }
         return null;
+    }
+    private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
 }
