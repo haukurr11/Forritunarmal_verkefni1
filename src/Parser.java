@@ -37,7 +37,10 @@ public class Parser {
     public void factor() {
         /* Decide what rule to use */
         if (token.gettCode() == TokenCode.INT)
+        {
             token = lexer.nextToken(); /* get the next token */
+
+        }
         else if (token.gettCode() == TokenCode.LPAREN)
         {
             token = lexer.nextToken();
@@ -53,7 +56,17 @@ public class Parser {
         System.exit(1);
     }
 
+    public void end() {
+
+    }
+
+    public void print() {
+
+    }
+
     public void parse() {
         expr();
+        end();
+        print();
     }
 }

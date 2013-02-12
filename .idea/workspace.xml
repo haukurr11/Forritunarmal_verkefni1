@@ -64,7 +64,7 @@
       <file leaf-file-name="Compiler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compiler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="25" selection-start="279" selection-end="279" vertical-scroll-proportion="0.0">
+            <state line="7" column="18" selection-start="196" selection-end="196" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -82,7 +82,7 @@
       <file leaf-file-name="Parser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="63" column="8" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.7026239">
               <folding />
             </state>
           </provider>
@@ -91,7 +91,7 @@
       <file leaf-file-name="Lexer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Lexer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="30" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.0">
+            <state line="27" column="42" selection-start="947" selection-end="947" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#2167#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -530,7 +530,11 @@
       <created>1360693833229</created>
       <updated>1360693833229</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Aðeins fiktað í parser">
+      <created>1360704339672</created>
+      <updated>1360704339672</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -619,7 +623,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="nextToken" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aðeins fiktað í parser" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -637,6 +641,7 @@
     <MESSAGE value="leiðbeiningar" />
     <MESSAGE value="smá fix" />
     <MESSAGE value="nextToken" />
+    <MESSAGE value="Aðeins fiktað í parser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -656,16 +661,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Compiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="25" selection-start="279" selection-end="279" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Lexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="30" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.0">
+        <state line="27" column="42" selection-start="947" selection-end="947" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#2167#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -673,9 +671,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Compiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="18" selection-start="196" selection-end="196" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="63" column="8" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.7026239">
           <folding />
         </state>
       </provider>
