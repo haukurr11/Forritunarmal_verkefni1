@@ -6,8 +6,31 @@ enum TokenCode {
     RPAREN,
     ERROR,
     END
-}
-class Token{
-    String lexeme;
-    TokenCode tCode;
+};
+public class Token{
+    public TokenCode tCode;
+    public String lexeme;
+
+    public Token(TokenCode tCode, String lexeme)
+    {
+        this.tCode=tCode;
+        this.lexeme = lexeme;
+    }
+    public String getLexeme() {
+        return lexeme;
+    }
+
+    public void setLexeme(String lexeme) {
+        this.lexeme = lexeme;
+    }
+
+
+    public TokenCode gettCode() {
+        return tCode;
+    }
+
+    public void settCode(TokenCode tCode) {
+        this.tCode = tCode;
+    }
+
 }

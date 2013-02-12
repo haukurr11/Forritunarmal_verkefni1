@@ -1,5 +1,7 @@
 public class Lexer {
-    public void nextToken() {
+    public Token nextToken() {
 
+
+        return null;
     }
 }
