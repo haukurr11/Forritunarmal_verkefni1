@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Lexer {
-    String input;
-    int location;
+    private String input;
+    private int location;
     public Lexer() {
         location = 0;
         try {
@@ -30,6 +30,7 @@ public class Lexer {
         if(location == input.length())
            return new Token(TokenCode.END,"\n");
         String s = input.substring(location,location+1);
+        //System.out.println(s);
         location++;
         if( isInteger(s) )
         {
