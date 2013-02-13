@@ -1,7 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /*
 Implement the class Parser, the syntax analyzer (parser).
@@ -18,51 +15,74 @@ public class Parser {
     private Token token;
     Stack<Token> operators;
     Stack<Token> nums;
+    int currentFactor;
+    int lastFactor;
+    Node root;
+    Node current;
+    private class Node {
+        Node parent;
+        public ArrayList<Token> operators;
+        public Stack<Token> nums;
+        public List<Node> children;
+        public Node(Node parent)
+        {
+            operators = new ArrayList<Token>();
+            nums = new Stack<Token>();
+            children = new ArrayList<Node>();
+            this.parent=parent;
+        }
+    }
     public Parser(Lexer lexer )
     {
+        currentFactor = 0;
+        lastFactor = 0;
         this.lexer=lexer;
         token = this.lexer.nextToken();
         operators= new Stack<Token>();
         nums = new Stack<Token>();
+        root = new Node(null);
+        current = root;
     }
 
     public void expr() {
         term();
         while ( token.gettCode() == TokenCode.PLUS ) {
-            operators.push(token);
+            current.operators.add(token);
             token = lexer.nextToken();
             term();
+
         }
     }
 
     public void term() {
-        factor(); /* parses the first factor */
+        factor(false); /* parses the first factor */
         while ( token.gettCode() == TokenCode.MULT) {
-            operators.push(token);
+            current.operators.add(token);
             token = lexer.nextToken();
-            factor();
+            factor(true);
+            nums = new Stack<Token>();
         }
     }
 
-    public void factor() {
+    public void factor(boolean mult) {
         /* Decide what rule to use */
         if (token.gettCode() == TokenCode.INT)
         {
-            nums.push(token);
+            Node newNode = new Node(current);
+            newNode.nums.push(token);
+            current.children.add(newNode);
             token = lexer.nextToken(); /* get the next token */
         }
         else if (token.gettCode() == TokenCode.LPAREN)
         {
+            Node newNode = new Node(current);
+            current.children.add(newNode);
+            current = newNode;
             token = lexer.nextToken();
             expr();
             if (token.gettCode() == TokenCode.RPAREN) {
+                current = newNode.parent;
                 token = lexer.nextToken();
-                if(token.gettCode() == TokenCode.MULT || token.gettCode()==TokenCode.PLUS)
-                {
-                   print();
-                   operators = new Stack<Token>();
-                   nums = new Stack<Token>();
-                }
             }
         }
 
@@ -80,27 +100,35 @@ public class Parser {
 
     }
 
-    public void print() {
+    public void print(Node node) {
+        if(node == null) return;
+        //System.out.println("----------BEGIN PRINT");
 
-        for(Token it : nums)
+        for(Token it : node.nums)
         {
             System.out.println("PUSH " + it.getLexeme());
 
         }
-        Collections.reverse(operators);
-        for(Token it : operators )
+        for(Node ch : node.children)
+        {
+            print(ch);
+        }
+        Collections.reverse(node.operators);
+        for(Token it : node.operators )
         {
             if(it.gettCode() == TokenCode.MULT)
                 System.out.println("MULT");
             else if(it.gettCode()==TokenCode.PLUS)
                 System.out.println("ADD");
         }
+
+        //System.out.println("------------END PRINT");
     }
 
     public void parse() {
         expr();
        // end();
-        print();
+        print(root);
         System.out.println("PRINT");
     }
 }
