@@ -1,5 +1,7 @@
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.Queue;
+import java.util.Stack;
 
 /*
 Implement the class Parser, the syntax analyzer (parser).
@@ -12,23 +14,23 @@ then the parser should output the error message "Syntax error!"
 (at the point when the error is recognized) and immediately quit.
 */
 public class Parser {
-    private Queue<Token> TheQ;
     private Lexer lexer;
     private Token token;
+    Stack<Token> operators;
+    Stack<Token> nums;
     public Parser(Lexer lexer )
     {
-        TheQ = new ArrayDeque<Token>();
         this.lexer=lexer;
         token = this.lexer.nextToken();
-        TheQ.add(token);
+        operators= new Stack<Token>();
+        nums = new Stack<Token>();
     }
 
     public void expr() {
-
         term();
         while ( token.gettCode() == TokenCode.PLUS ) {
+            operators.push(token);
             token = lexer.nextToken();
-            TheQ.add(token);
             term();
         }
     }
@@ -36,8 +38,8 @@ public class Parser {
     public void term() {
         factor(); /* parses the first factor */
         while ( token.gettCode() == TokenCode.MULT) {
+            operators.push(token);
             token = lexer.nextToken();
-            TheQ.add(token);
             factor();
         }
     }
@@ -46,17 +48,15 @@ public class Parser {
         /* Decide what rule to use */
         if (token.gettCode() == TokenCode.INT)
         {
+            nums.push(token);
             token = lexer.nextToken(); /* get the next token */
-            TheQ.add(token);
         }
         else if (token.gettCode() == TokenCode.LPAREN)
         {
             token = lexer.nextToken();
-            TheQ.add(token);
             expr();
             if (token.gettCode() == TokenCode.RPAREN) {
                 token = lexer.nextToken();
-                TheQ.add(token);
             }
         }
 
@@ -75,12 +75,20 @@ public class Parser {
     }
 
     public void print() {
-          Token it = TheQ.poll();
-          while (it != null)
-          {
-               System.out.println(it.gettCode());
-               it = TheQ.poll();
-          }
+
+        for(Token it : nums)
+        {
+            System.out.println("PUSH " + it.getLexeme());
+
+        }
+        Collections.reverse(operators);
+        for(Token it : operators )
+        {
+            if(it.gettCode() == TokenCode.MULT)
+                System.out.println("MULT");
+            else if(it.gettCode()==TokenCode.PLUS)
+                System.out.println("ADD");
+        }
     }
 
     public void parse() {
