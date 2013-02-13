@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60f29f81-58bb-45f3-b91b-49fb2ce9ed04" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Forritunarmal_verkefni1\src\Interpreter.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Lexer.java" afterPath="$PROJECT_DIR$/src/Lexer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Parser.java" afterPath="$PROJECT_DIR$/src/Parser.java" />
     </list>
     <ignored path="Forritunarmal_verkefni1.iws" />
@@ -75,7 +73,7 @@
       <file leaf-file-name="Parser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="16" selection-start="1236" selection-end="1236" vertical-scroll-proportion="0.608229">
+            <state line="102" column="16" selection-start="2888" selection-end="2888" vertical-scroll-proportion="0.9087657">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -424,7 +422,11 @@
       <created>1360714203956</created>
       <updated>1360714203956</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="smá pælingar í parser">
+      <created>1360770668581</created>
+      <updated>1360770668581</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -561,7 +563,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="16" selection-start="1236" selection-end="1236" vertical-scroll-proportion="0.608229">
+        <state line="102" column="16" selection-start="2888" selection-end="2888" vertical-scroll-proportion="0.9087657">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

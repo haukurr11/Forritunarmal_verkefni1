@@ -26,31 +26,25 @@ public class Parser {
         nums = new Stack<Token>();
     }
 
-    public void expr(int mult) {
-        term(mult);
+    public void expr() {
+        term();
         while ( token.gettCode() == TokenCode.PLUS ) {
-            if( mult == 1 ) {
-                print();
-                operators = new Stack<Token>();
-            nums = new Stack<Token>();
-            }
             operators.push(token);
             token = lexer.nextToken();
-            term(mult);
-
+            term();
         }
     }
 
-    public void term(int mult) {
-        factor(mult); /* parses the first factor */
+    public void term() {
+        factor(); /* parses the first factor */
         while ( token.gettCode() == TokenCode.MULT) {
             operators.push(token);
             token = lexer.nextToken();
-            factor(1);
+            factor();
         }
     }
 
-    public void factor(int mult) {
+    public void factor() {
         /* Decide what rule to use */
         if (token.gettCode() == TokenCode.INT)
         {
@@ -60,10 +54,10 @@ public class Parser {
         else if (token.gettCode() == TokenCode.LPAREN)
         {
             token = lexer.nextToken();
-            expr(mult);
+            expr();
             if (token.gettCode() == TokenCode.RPAREN) {
                 token = lexer.nextToken();
-                if(token.gettCode() == TokenCode.MULT || (token.gettCode()==TokenCode.PLUS && mult==1))
+                if(token.gettCode() == TokenCode.MULT || token.gettCode()==TokenCode.PLUS)
                 {
                    print();
                    operators = new Stack<Token>();
@@ -104,7 +98,7 @@ public class Parser {
     }
 
     public void parse() {
-        expr(0);
+        expr();
        // end();
         print();
         System.out.println("PRINT");
