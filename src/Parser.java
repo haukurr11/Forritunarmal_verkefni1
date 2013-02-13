@@ -81,6 +81,7 @@ public class Parser {
         if (token.gettCode() == TokenCode.INT)
         {
             Token temp = token;
+
             token = lexer.nextToken(); /* get the next token */
                 Node newNode = new Node(current);
                 current.children.add(newNode);
