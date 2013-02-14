@@ -46,72 +46,48 @@ public class Parser {
     }
 
     public void expr() {
+        Node newNode = new Node(current);
+        current.children.add(newNode);
         term();
         while ( token.gettCode() == TokenCode.PLUS ) {
             current.operators.add(token);
             token = lexer.nextToken();
-            term();
-
+            expr();
         }
     }
 
     public void term() {
-        factor(false); /* parses the first factor */
+        Node newNode = new Node(current);
+        current.children.add(newNode);
+        current = newNode;
+        factor(); /* parses the first factor */
         while ( token.gettCode() == TokenCode.MULT) {
-            //Node newNode = new Node(current);
-            if(tala_before) {
-            current.operators.addFirst(token);
+            current.operators.push(token);
             token = lexer.nextToken();
-            factor(true);
-            current = current.parent;
-            }
-            else {
-
-                Node newNode = new Node(current);
-                current.children.add(newNode);
-                newNode.operators.add(token);
-                token = lexer.nextToken();
-                current = newNode;
-            }
+            term();
         }
+        current = current.parent;
     }
 
-    public void factor(boolean mult) {
+    public void factor() {
         /* Decide what rule to use */
         if (token.gettCode() == TokenCode.INT)
         {
-            Token temp = token;
-
+            Node newNode = new Node(current);
+            newNode.nums.add(token) ;
+            current.children.add(newNode);
             token = lexer.nextToken(); /* get the next token */
-                Node newNode = new Node(current);
-                current.children.add(newNode);
-            if(token.gettCode() == TokenCode.MULT)
-            {
-
-             newNode.nums.addFirst(temp);
-             tala_before = true;
-             current = newNode;
-            }
-            else
-                newNode.nums.addFirst(temp);
         }
         else if (token.gettCode() == TokenCode.LPAREN)
         {
-            tala_before=false;
             Node newNode = new Node(current);
             current.children.add(newNode);
             current = newNode;
-            tala_before = false;
             token = lexer.nextToken();
             expr();
             Token tempTok = lexer.nextToken();
             if (token.gettCode() == TokenCode.RPAREN) {
                     current = newNode.parent;
-                if(tempTok.gettCode() == TokenCode.MULT)
-                {
-                    tala_before = true;
-                    current = newNode;
-                }
             }
             token = tempTok;
         }
