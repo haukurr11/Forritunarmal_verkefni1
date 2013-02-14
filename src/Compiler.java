@@ -1,6 +1,3 @@
-/*
-Write a main class, Compiler, which only does the following:
- */
 public class Compiler {
     public static void main(String args[])
     {

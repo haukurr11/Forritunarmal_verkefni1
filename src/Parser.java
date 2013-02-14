@@ -1,59 +1,52 @@
 import java.util.*;
 
-/*
-Implement the class Parser, the syntax analyzer (parser).
-This should be a top-down recursive-descent parser for the grammar G above,
-i.e. a program which recognizes valid infix expressions.
-The output of the parser is the stack-based intermediate code S,
-corresponding to the given expression, written to standard output (stdout).
-If the expression is not in the language (or if an ERROR token is returned by the Lexer)
-then the parser should output the error message "Syntax error!"
-(at the point when the error is recognized) and immediately quit.
-WTF
-*/
 public class Parser {
     private Lexer lexer;
     private Token token;
     Node root;
     Node current;
     int leftp;
-    boolean error = false;
     int rightp;
+
     private class Node {
         Node parent;
         public List<Token> operators;
         public List<Token> nums;
         public List<Node> children;
+
         public Node(Node parent)
         {
             operators = new ArrayList<Token>();
             nums = new ArrayList<Token>();
             children = new ArrayList<Node>();
-            this.parent=parent;
+            this.parent = parent;
         }
+
     }
+
     public Parser(Lexer lexer )
     {
-        leftp=0;
-        rightp=0;
-        this.lexer=lexer;
+        leftp = 0;
+        rightp = 0;
+        this.lexer = lexer;
         token = this.lexer.nextToken();
         root = new Node(null);
         current = root;
     }
 
-    private void expr() {
-
+    private void expr()
+    {
         Node newNode = new Node(current);
         current.children.add(newNode);
         current = newNode;
         term();
-        if(token.gettCode()==TokenCode.RPAREN)
-        {
+
+        if(token.gettCode() == TokenCode.RPAREN) {
             rightp++;
-            if(leftp<rightp)
+            if(leftp < rightp)
                 error();
         }
+
         while ( token.gettCode() == TokenCode.PLUS ) {
             current.operators.add(token);
             token = lexer.nextToken();
@@ -61,18 +54,20 @@ public class Parser {
             return;
         }
 
-        if(token.gettCode() == TokenCode.END)
-        {
+        if(token.gettCode() == TokenCode.END) {
             return;
         }
-        current=current.parent;
+
+        current = current.parent;
     }
 
-    private void term() {
-            Node newNode = new Node(current);
+    private void term()
+    {
+        Node newNode = new Node(current);
         current.children.add(newNode);
         current = newNode;
-        factor(); /* parses the first factor */
+
+        factor();
 
         if(token.gettCode() == TokenCode.ERROR)
             error();
@@ -82,20 +77,20 @@ public class Parser {
             token = lexer.nextToken();
             term();
         }
-        current=current.parent;
+
+        current = current.parent;
     }
 
-    private void factor() {
-        /* Decide what rule to use */
-        if (token.gettCode() == TokenCode.INT)
-        {
+    private void factor()
+    {
+        if (token.gettCode() == TokenCode.INT) {
             Node newNode = new Node(current);
             newNode.nums.add(token) ;
             current.children.add(newNode);
-            token = lexer.nextToken(); /* get the next token */
+            token = lexer.nextToken();
         }
-        else if (token.gettCode() == TokenCode.LPAREN)
-        {
+
+        else if (token.gettCode() == TokenCode.LPAREN) {
             leftp++;
             Node newNode = new Node(current);
             current.children.add(newNode);
@@ -104,53 +99,57 @@ public class Parser {
 
             expr();
 
-            if (    token.gettCode() == TokenCode.RPAREN) {
+            if ( token.gettCode() == TokenCode.RPAREN ) {
                 current = newNode.parent;
-                    token = lexer.nextToken();
-                }
+                token = lexer.nextToken();
+            }
 
-            else
-               {
+            else {
                 error();
             }
-        }
-        else
-        {
+        } else {
             error();
         }
     }
 
-    private void error() {
+    private void error()
+    {
         print();
         System.out.println("Syntax error!");
         System.exit(1);
     }
 
-    private void print(Node node) {
-        if(node == null) return;
-        for(Token it : node.nums)
-        {
+    private void print(Node node)
+    {
+        if(node == null)
+            return;
+
+        for(Token it : node.nums) {
             System.out.println("PUSH " + it.getLexeme());
         }
-        for(Node ch : node.children)
-        {
+
+        for(Node ch : node.children) {
             print(ch);
         }
+
         Collections.reverse(node.operators);
-        for(Token it : node.operators )
-        {
+
+        for(Token it : node.operators ) {
             if(it.gettCode() == TokenCode.MULT)
                 System.out.println("MULT");
-            else if(it.gettCode()==TokenCode.PLUS)
+            else if(it.gettCode() == TokenCode.PLUS)
                 System.out.println("ADD");
         }
     }
 
-    private void print() {
+    private void print()
+    {
         print(root);
         System.out.println("PRINT");
     }
-    public void parse() {
+
+    public void parse()
+    {
         expr();
         print();
     }

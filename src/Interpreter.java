@@ -7,69 +7,79 @@ import java.util.Stack;
 
 public class Interpreter {
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[])
+    {
         interpret( getInput() );
-        }
+    }
 
-    private static void interpret(List<String> commands) {
+    private static void interpret(List<String> commands)
+    {
+        if(commands == null) return;
+
         Stack<Integer> numbers = new Stack<Integer>();
+
         for(String cmd : commands) {
             if(cmd.startsWith("PUSH ")) {
                 String number = cmd.split("PUSH ")[1];
+
                 if( isInteger(number) ) {
                     int num = Integer.parseInt(number);
                     numbers.push(num);
-                    }
-                else {
+                } else {
                     System.out.println("Error: " + number + " is not an integer");
-                    }
                 }
-            else {
+            } else {
                 if(cmd.equals("ADD")) {
                     if( numbers.size() >= 2 ) {
                         int a = numbers.pop();
                         int b = numbers.pop();
                         int c = a + b;
                         numbers.push(c);
-                        }
                     }
-                else if(cmd.equals("MULT")) {
+                } else if(cmd.equals("MULT")) {
                     if( numbers.size() >= 2 ) {
                         int a = numbers.pop();
                         int b = numbers.pop();
                         int c = a * b;
                         numbers.push(c);
-                        }
                     }
-                else if(cmd.equals("PRINT")) {
+                } else if(cmd.equals("PRINT")) {
                     if(!numbers.empty())
                         System.out.println(numbers.pop());
-                    }
-                else {
+                } else {
                     System.out.println("Error for operator: " + cmd.split(" ")[0]);
-                    }
                 }
             }
         }
-    private static List<String> getInput() throws IOException {
-        List<String> commands = new ArrayList<String>();
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
-        String input = br.readLine();
-        while(input != null && !input.isEmpty()) {
-            commands.add(input);
-            input = br.readLine();
+    }
+
+    private static List<String> getInput()
+    {
+        try {
+            List<String> commands = new ArrayList<String>();
+            InputStreamReader isr = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(isr);
+            String input = br.readLine();
+            while(input != null && !input.isEmpty()) {
+                 commands.add(input);
+                 input = br.readLine();
             }
-        return commands;
+                return commands;
         }
-    private static boolean isInteger(String s) {
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+       return null;
+    }
+
+    private static boolean isInteger(String s)
+    {
         try {
             Integer.parseInt(s);
-            }
-        catch(NumberFormatException e) {
+        } catch(NumberFormatException e) {
             return false;
-            }
-        // only got here if we didn't return false
-        return true;
         }
+        return true;
     }
+}
