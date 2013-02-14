@@ -16,6 +16,9 @@ public class Parser {
     private Token token;
     Node root;
     Node current;
+    int leftp;
+    boolean error = false;
+    int rightp;
     private class Node {
         Node parent;
         public List<Token> operators;
@@ -31,6 +34,8 @@ public class Parser {
     }
     public Parser(Lexer lexer )
     {
+        leftp=0;
+        rightp=0;
         this.lexer=lexer;
         token = this.lexer.nextToken();
         root = new Node(null);
@@ -38,28 +43,40 @@ public class Parser {
     }
 
     private void expr() {
+
         Node newNode = new Node(current);
         current.children.add(newNode);
         current = newNode;
         term();
+        if(token.gettCode()==TokenCode.RPAREN)
+        {
+            rightp++;
+            if(leftp<rightp)
+                error();
+        }
         while ( token.gettCode() == TokenCode.PLUS ) {
             current.operators.add(token);
             token = lexer.nextToken();
             expr();
             return;
         }
+
+        if(token.gettCode() == TokenCode.END)
+        {
+            return;
+        }
         current=current.parent;
     }
 
     private void term() {
-        Node newNode = new Node(current);
+            Node newNode = new Node(current);
         current.children.add(newNode);
         current = newNode;
         factor(); /* parses the first factor */
+
         if(token.gettCode() == TokenCode.ERROR)
             error();
-        if(token.gettCode() == TokenCode.END)
-            print();
+
         while ( token.gettCode() == TokenCode.MULT) {
             current.operators.add(token);
             token = lexer.nextToken();
@@ -79,18 +96,28 @@ public class Parser {
         }
         else if (token.gettCode() == TokenCode.LPAREN)
         {
+            leftp++;
             Node newNode = new Node(current);
             current.children.add(newNode);
             current = newNode;
             token = lexer.nextToken();
+
             expr();
-            if (token.gettCode() == TokenCode.RPAREN) {
-                    current = newNode.parent;
+
+            if (    token.gettCode() == TokenCode.RPAREN) {
+                current = newNode.parent;
+                    token = lexer.nextToken();
+                }
+
+            else
+               {
+                error();
             }
-            token = lexer.nextToken();
         }
         else
+        {
             error();
+        }
     }
 
     private void error() {
@@ -125,5 +152,6 @@ public class Parser {
     }
     public void parse() {
         expr();
+        print();
     }
 }
