@@ -10,7 +10,7 @@ public class Interpreter {
     public static void main(String args[]) throws IOException {
            List<String> commands = getInput();
            int results = calc(commands);
-           System.out.println(results);
+
     }
 
     private static int calc(List<String> commands){
@@ -33,15 +33,21 @@ public class Interpreter {
             {
                 if(cmd.equals("ADD"))
                 {
-
+                   int a = numbers.pop();
+                   int b = numbers.pop();
+                   int c = a+b;
+                   numbers.push(c);
                 }
                 else if(cmd.equals("MULT"))
                 {
-
+                    int a = numbers.pop();
+                    int b = numbers.pop();
+                    int c = a*b;
+                    numbers.push(c);
                 }
                 else if(cmd.equals("PRINT"))
                 {
-
+                    System.out.println(numbers.pop());
                 }
                 else {
                     error();
