@@ -17,8 +17,38 @@ public class Interpreter {
         Stack<Integer> numbers = new Stack<Integer>();
         int results = 0;
         int register = 0;
+        for(String cmd : commands) {
+            if(cmd.startsWith("PUSH ")) {
+                String number = cmd.split("PUSH ")[1];
+                if( isInteger(number) )
+                {
+                    int num = Integer.parseInt(number);
+                    numbers.push(num);
+                }
+                else {
+                    error();
+                }
+            }
+            else
+            {
+                if(cmd.equals("ADD"))
+                {
 
-        return 0;
+                }
+                else if(cmd.equals("MULT"))
+                {
+
+                }
+                else if(cmd.equals("PRINT"))
+                {
+
+                }
+                else {
+                    error();
+                }
+            }
+        }
+        return results;
     }
     private static List<String> getInput() throws IOException {
         List<String> commands = new ArrayList<String>();
@@ -31,5 +61,18 @@ public class Interpreter {
             input = br.readLine();
         }
         return commands;
+    }
+    private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
+    }
+    private static void error() {
+        System.out.println("SYNTAX ERROR");
+        System.exit(1);
     }
 }
